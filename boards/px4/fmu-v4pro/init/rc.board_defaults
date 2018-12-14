@@ -1,0 +1,12 @@
+#!nsh
+#
+# PX4 FMUv4pro specific board defaults
+#------------------------------------------------------------------------------
+#
+
+if [ $AUTOCNF = yes ]
+then
+	param set SYS_FMU_TASK 1
+fi
+
+set LOGGER_BUF 64

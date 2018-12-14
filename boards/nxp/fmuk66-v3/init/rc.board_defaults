@@ -1,0 +1,12 @@
+#!nsh
+#
+# NXP fmuk66-v3 specific board defaults
+#------------------------------------------------------------------------------
+#
+
+if [ $AUTOCNF = yes ]
+then
+	param set SYS_FMU_TASK 1
+fi
+
+set MIXER_AUX none

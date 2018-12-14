@@ -1,7 +1,6 @@
 #!nsh
 #
-# Gumstix Aerocore2 specific board init
-#
+# PX4 FMUv4 specific board defaults
 #------------------------------------------------------------------------------
 #
 
@@ -13,8 +12,4 @@ then
 	param set SYS_FMU_TASK 1
 fi
 
-set DATAMAN_OPT "-f /fs/mtd_dataman"
 set MIXER_AUX none
-
-l3gd20 -R 12 start
-lsm303d start

@@ -1,7 +1,6 @@
 #!nsh
 #
-# AUAV/mRO x21 specific board init
-#
+# AUAV/mRO x21 specific board sensors init
 #------------------------------------------------------------------------------
 #
 # UART mapping on x21:
@@ -15,13 +14,6 @@
 #
 #------------------------------------------------------------------------------
 #
-
-
-if [ $AUTOCNF = yes ]
-then
-
-
-fi
 
 
 # External I2C bus

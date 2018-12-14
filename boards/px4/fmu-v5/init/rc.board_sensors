@@ -1,7 +1,6 @@
 #!nsh
 #
-# PX4 FMUv5 specific board init
-#
+# PX4 FMUv5 specific board sensors init
 #------------------------------------------------------------------------------
 #
 # UART mapping on FMUv5:
@@ -16,13 +15,6 @@
 #
 #------------------------------------------------------------------------------
 #
-
-if [ $AUTOCNF = yes ]
-then
-	param set SYS_FMU_TASK 1
-fi
-
-set LOGGER_BUF 64
 
 # Internal SPI bus ICM-20602
 mpu6000 -R 8 -s -T 20602 start
