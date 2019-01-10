@@ -87,7 +87,10 @@ bool FlightTaskAuto::updateInitialize()
 	      && PX4_ISFINITE(_velocity(1))
 	      && PX4_ISFINITE(_velocity(2));
 
-	return ret;
+	ret = ret && MPC_OBS_AVOID.get();
+	MPC_OBS_AVOID.set(1);
+
+	return ret && MPC_OBS_AVOID.get();
 }
 
 bool FlightTaskAuto::_evaluateTriplets()
