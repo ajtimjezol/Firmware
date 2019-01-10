@@ -118,6 +118,10 @@ private:
 	bool _yaw_lock = false; /**< if within acceptance radius, lock yaw to current yaw */
 	uORB::Subscription<position_setpoint_triplet_s> *_sub_triplet_setpoint{nullptr};
 	uORB::Subscription<vehicle_status_s> *_sub_vehicle_status{nullptr};
+	uORB::Subscription<vehicle_trajectory_waypoint_s> *_traj_wp_avoidance_sub{nullptr};
+
+	/** Timeout in reception of modified waypoints after which the avoidance system is considered to be lost */
+	static constexpr uint64_t TRAJECTORY_STREAM_TIMEOUT_US = 5;
 
 	matrix::Vector3f
 	_triplet_target; /**< current triplet from navigator which may differ from the intenal one (_target) depending on the vehicle state. */
@@ -142,4 +146,5 @@ private:
 	State _getCurrentState(); /**< Computes the current vehicle state based on the vehicle position and navigator triplets. */
 	void _set_heading_from_mode(); /**< @see  MPC_YAW_MODE */
 	void _checkAvoidanceProgress();
+	bool _modified_waypoints_received(); /**check whether the waypoints modified by the avoidance system are received */
 };

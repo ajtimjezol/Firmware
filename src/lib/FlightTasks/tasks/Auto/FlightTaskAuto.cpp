@@ -60,6 +60,10 @@ bool FlightTaskAuto::initializeSubscriptions(SubscriptionArray &subscription_arr
 		return false;
 	}
 
+	if (!subscription_array.get(ORB_ID(vehicle_trajectory_waypoint), _traj_wp_avoidance_sub)) {
+		return false;
+	}
+
 	return true;
 }
 
@@ -86,6 +90,11 @@ bool FlightTaskAuto::updateInitialize()
 	      && PX4_ISFINITE(_velocity(0))
 	      && PX4_ISFINITE(_velocity(1))
 	      && PX4_ISFINITE(_velocity(2));
+
+	//check if modified waypoints get back from avoidance system
+	if (MPC_OBS_AVOID.get()) {
+		ret = ret && _modified_waypoints_received();
+	}
 
 	ret = ret && MPC_OBS_AVOID.get();
 	MPC_OBS_AVOID.set(1);
@@ -511,4 +520,14 @@ bool FlightTaskAuto::_compute_heading_from_2D_vector(float &heading, Vector2f v)
 
 	// heading unknown and therefore do not change heading
 	return false;
+}
+
+bool FlightTaskAuto::_modified_waypoints_received()
+{
+	if (hrt_elapsed_time((hrt_abstime *)&_traj_wp_avoidance_sub->get().timestamp) < TRAJECTORY_STREAM_TIMEOUT_US) {
+		return true;
+
+	} else {
+		return false;
+	}
 }
