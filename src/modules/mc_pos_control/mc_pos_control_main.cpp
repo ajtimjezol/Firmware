@@ -1111,6 +1111,10 @@ void
 MulticopterPositionControl::failsafe(vehicle_local_position_setpoint_s &setpoint, const PositionControlStates &states,
 				     const bool force, const bool warn)
 {
+	if (warn) {
+		send_vehicle_cmd_do(vehicle_status_s::NAVIGATION_STATE_AUTO_LOITER);
+	}
+
 	_failsafe_land_hysteresis.set_state_and_update(true);
 
 	if (!_failsafe_land_hysteresis.get_state() && !force) {
@@ -1282,6 +1286,11 @@ void MulticopterPositionControl::send_vehicle_cmd_do(uint8_t nav_state)
 
 	case vehicle_status_s::NAVIGATION_STATE_ALTCTL:
 		command.param2 = (float)PX4_CUSTOM_MAIN_MODE_ALTCTL;
+		break;
+	
+	case vehicle_status_s::NAVIGATION_STATE_AUTO_LOITER:
+		command.param2 = (float)PX4_CUSTOM_MAIN_MODE_AUTO;
+		command.param3 = (float)PX4_CUSTOM_SUB_MODE_AUTO_LOITER;
 		break;
 
 	default: //vehicle_status_s::NAVIGATION_STATE_POSCTL
