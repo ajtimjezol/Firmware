@@ -47,6 +47,8 @@
 #include <uORB/topics/vehicle_status.h>
 #include <lib/ecl/geo/geo.h>
 
+using namespace time_literals;
+
 /**
  * This enum has to agree with position_setpoint_s type definition
  * The only reason for not using the struct position_setpoint is because
@@ -121,7 +123,7 @@ private:
 	uORB::Subscription<vehicle_trajectory_waypoint_s> *_traj_wp_avoidance_sub{nullptr};
 
 	/** Timeout in reception of modified waypoints after which the avoidance system is considered to be lost */
-	static constexpr uint64_t TRAJECTORY_STREAM_TIMEOUT_US = 5;
+	static constexpr uint64_t TRAJECTORY_STREAM_TIMEOUT_US = 1_s;
 
 	matrix::Vector3f
 	_triplet_target; /**< current triplet from navigator which may differ from the intenal one (_target) depending on the vehicle state. */
