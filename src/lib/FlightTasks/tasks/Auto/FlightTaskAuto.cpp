@@ -96,10 +96,7 @@ bool FlightTaskAuto::updateInitialize()
 		ret = ret && _modified_waypoints_received();
 	}
 
-	ret = ret && MPC_OBS_AVOID.get();
-	MPC_OBS_AVOID.set(1);
-
-	return ret && MPC_OBS_AVOID.get();
+	return ret;
 }
 
 bool FlightTaskAuto::_evaluateTriplets()

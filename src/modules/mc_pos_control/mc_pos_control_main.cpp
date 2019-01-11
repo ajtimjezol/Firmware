@@ -1111,8 +1111,16 @@ void
 MulticopterPositionControl::failsafe(vehicle_local_position_setpoint_s &setpoint, const PositionControlStates &states,
 				     const bool force, const bool warn)
 {
-	if (warn) {
-		send_vehicle_cmd_do(vehicle_status_s::NAVIGATION_STATE_AUTO_LOITER);
+
+	PX4_INFO_RAW("in failsafe function\n");
+	if (_vehicle_status.nav_state == vehicle_status_s::NAVIGATION_STATE_AUTO_MISSION && MPC_OBS_AVOID.get()) {
+		if(_vehicle_status.nav_state == vehicle_status_s::NAVIGATION_STATE_AUTO_RTL){
+			PX4_INFO_RAW("sending land\n");
+			send_vehicle_cmd_do(vehicle_status_s::NAVIGATION_STATE_AUTO_LAND);
+		}else{
+			PX4_INFO_RAW("sending loiter\n");
+			send_vehicle_cmd_do(vehicle_status_s::NAVIGATION_STATE_AUTO_LOITER);
+		}
 	}
 
 	_failsafe_land_hysteresis.set_state_and_update(true);
