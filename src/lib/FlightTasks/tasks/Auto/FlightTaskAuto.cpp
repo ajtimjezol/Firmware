@@ -92,7 +92,7 @@ bool FlightTaskAuto::updateInitialize()
 	      && PX4_ISFINITE(_velocity(2));
 
 	//check if modified waypoints get back from avoidance system
-	if (MPC_OBS_AVOID.get()) {
+	if (MPC_OBS_AVOID.get() && _sub_vehicle_status->get().nav_state == vehicle_status_s::NAVIGATION_STATE_AUTO_MISSION) {
 		ret = ret && _modified_waypoints_received();
 	}
 
